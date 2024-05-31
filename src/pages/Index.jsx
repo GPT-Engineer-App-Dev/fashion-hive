@@ -1,7 +1,18 @@
-import { Box, Container, Flex, Heading, SimpleGrid, Text, VStack, Image, Link, HStack } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, SimpleGrid, Text, VStack, Image, Link, HStack, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import { useState } from "react";
 
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const filteredProducts = selectedCategory
+    ? products.filter((product) => product.category === selectedCategory)
+    : products;
+
   return (
     <Container maxW="container.xl" p={0}>
       {/* Navigation Bar */}
@@ -17,6 +28,15 @@ const Index = () => {
         </HStack>
       </Flex>
 
+      {/* Category Filter */}
+      <HStack spacing={4} p={4}>
+        {["Men", "Women", "Kids", "Accessories"].map((category) => (
+          <Button key={category} onClick={() => handleCategorySelect(category)}>
+            {category}
+          </Button>
+        ))}
+      </HStack>
+
       {/* Hero Section */}
       <Box bg="gray.100" color="gray.800" p={8} textAlign="center">
         <Heading as="h2" size="2xl" mb={4}>Welcome to Shopify</Heading>
@@ -25,7 +45,7 @@ const Index = () => {
 
       {/* Product Grid */}
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} p={8}>
-        {products.map((product, index) => (
+        {filteredProducts.map((product, index) => (
           <Box key={index} borderWidth="1px" borderRadius="lg" overflow="hidden">
             <Image src={product.image} alt={product.name} />
             <Box p={4}>
@@ -62,31 +82,73 @@ const products = [
     name: "Cotton T-shirt",
     price: 25.99,
     image: "https://via.placeholder.com/150",
+    category: "Men",
   },
   {
     name: "Denim Jeans",
     price: 39.99,
     image: "https://via.placeholder.com/150",
+    category: "Men",
   },
   {
     name: "Summer Dress",
     price: 49.99,
     image: "https://via.placeholder.com/150",
+    category: "Women",
   },
   {
     name: "Leather Jacket",
     price: 79.99,
     image: "https://via.placeholder.com/150",
+    category: "Men",
   },
   {
     name: "Sneakers",
     price: 29.99,
     image: "https://via.placeholder.com/150",
+    category: "Men",
   },
   {
     name: "Hoodie",
     price: 35.99,
     image: "https://via.placeholder.com/150",
+    category: "Men",
+  },
+  {
+    name: "Summer Dress",
+    price: 49.99,
+    image: "https://via.placeholder.com/150",
+    category: "Women",
+  },
+  {
+    name: "Kids T-shirt",
+    price: 15.99,
+    image: "https://via.placeholder.com/150",
+    category: "Kids",
+  },
+  {
+    name: "Kids Jeans",
+    price: 29.99,
+    image: "https://via.placeholder.com/150",
+    category: "Kids",
+  },
+  {
+    name: "Kids Dress",
+    price: 24.99,
+    image: "https://via.placeholder.com/150",
+    category: "Kids",
+  },
+  {
+    name: "Sunglasses",
+    price: 9.99,
+    image: "https://via.placeholder.com/150",
+    category: "Accessories",
+  },
+  {
+    name: "Handbag",
+    price: 49.99,
+    image: "https://via.placeholder.com/150",
+    category: "Accessories",
   },
 ];
 
